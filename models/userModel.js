@@ -11,7 +11,7 @@ module.exports = (sequelize, DataType) => sequelize.define('User', {
     type: DataType.STRING(30),
     allowNull: false,
   },
-  place: {
+  address: {
     type: DataType.STRING(100),
     allowNull: false,
   },
@@ -37,7 +37,15 @@ module.exports = (sequelize, DataType) => sequelize.define('User', {
     defaultValue: 'OB',
   },
   userInfo: {
-    type: DataType.TEXT,
+    type: DataType.STRING(200),
+    allowNull: true,
+  },
+  latitude: {
+    type: DataType.STRING(40),
+    allowNull: true,
+  },
+  longitude: {
+    type: DataType.STRING(40),
     allowNull: true,
   },
 }, {

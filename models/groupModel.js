@@ -7,8 +7,16 @@ module.exports = (sequelize, DataType) => sequelize.define('Group', {
     type: DataType.STRING(45),
     allowNull: false,
   },
-  etc: {
-    type: DataType.TEXT,
+  groupInfo: {
+    type: DataType.STRING(200),
+    allowNull: true,
+  },
+  latitude: {
+    type: DataType.STRING(40),
+    allowNull: true,
+  },
+  longitude: {
+    type: DataType.STRING(40),
     allowNull: true,
   },
 }, {
