@@ -6,7 +6,7 @@ module.exports = (sequelize, DataType) => sequelize.define('GroupUserRelation', 
     primaryKey: true,
     autoIncrement: true,
   },
-  is_leader_flag: {
+  isLeader: {
     type: DataType.BOOLEAN,
     allowNull: false,
   },
@@ -17,6 +17,7 @@ module.exports = (sequelize, DataType) => sequelize.define('GroupUserRelation', 
   groupId: {
     type: DataType.INTEGER,
     allowNull: false,
+    defaultValue: false,
   },
 }, {
   freezeTableName: true,

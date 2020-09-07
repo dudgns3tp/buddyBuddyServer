@@ -36,6 +36,10 @@ module.exports = (sequelize, DataType) => sequelize.define('User', {
     allowNull: false,
     defaultValue: 'OB',
   },
+  userInfo: {
+    type: DataType.TEXT,
+    allowNull: true,
+  },
 }, {
   freezeTableName: true,
   timestamps: false,
