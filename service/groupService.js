@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const { Group, GroupUserRelation } = require('../models');
+const { User, Group, GroupUserRelation } = require('../models');
 
 module.exports.create = async ({ groupLocation, groupName, etc }) => {
   const etcData = _.isNil(etc) ? '' : etc;
@@ -19,7 +19,7 @@ module.exports.create = async ({ groupLocation, groupName, etc }) => {
 module.exports.readAll = async () => {
   try {
     const group = await Group.findAll();
-    return { group };
+    return group;
   } catch (err) {
     throw err;
   }
@@ -45,7 +45,20 @@ module.exports.readOne = async (id) => {
         id,
       },
     });
-    return group;
+    const groupUser = await GroupUserRelation.findAll({
+      include: [{
+        model: User,
+        as: 'User',
+      }],
+      where: {
+        groupId: id,
+      },
+    });
+
+    return {
+      group,
+      users: groupUser,
+    };
   } catch (err) {
     throw err;
   }

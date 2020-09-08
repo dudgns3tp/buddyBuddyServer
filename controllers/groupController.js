@@ -79,8 +79,14 @@ const joinGroup = async (req, res) => {
     console.log('필요한 값이 없습니다.');
     return res.status(400).send(util.fail(400, resMes.NULL_VALUE));
   }
-
   try {
+    const isGroup = await groupService.readOne(groupId);
+
+    if (_.isNil(isGroup)) {
+      console.log(`${groupId}는 없는 그룹 입니다. `);
+      return res.status(400).send(util.fail(400, resMes.NOT_EXITS_GROUP));
+    }
+
     const isGroupMember = await groupService.isGroupMember(userId);
     if (!_.isNil(isGroupMember)) {
       console.log('이미 등록된 멤버 입니다.');
