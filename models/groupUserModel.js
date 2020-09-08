@@ -1,5 +1,5 @@
 module.exports = (sequelize, DataType) => sequelize.define('GroupUserRelation', {
-  id: {
+  groupUserId: {
     type: DataType.INTEGER,
     allowNull: false,
     unique: true,

@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const _ = require('lodash');
 const { User, Group, GroupUserRelation } = require('../models');
 
@@ -9,7 +10,6 @@ module.exports.create = async ({ groupLocation, groupName, etc }) => {
       groupName,
       etc: etcData,
     });
-    console.log(group);
     return group;
   } catch (err) {
     throw err;
@@ -25,11 +25,11 @@ module.exports.readAll = async () => {
   }
 };
 
-module.exports.delete = async (id) => {
+module.exports.delete = async (groupId) => {
   try {
     const group = await Group.destroy({
       where: {
-        id,
+        groupId,
       },
     });
     return group;
@@ -38,11 +38,11 @@ module.exports.delete = async (id) => {
   }
 };
 
-module.exports.readOne = async (id) => {
+module.exports.readOne = async (groupId) => {
   try {
     const group = await Group.findOne({
       where: {
-        id,
+        groupId,
       },
     });
     const groupUser = await GroupUserRelation.findAll({
@@ -51,8 +51,9 @@ module.exports.readOne = async (id) => {
         as: 'User',
       }],
       where: {
-        groupId: id,
+        groupId,
       },
+      attributes: ['groupUserId', 'isLeader'],
     });
 
     return {

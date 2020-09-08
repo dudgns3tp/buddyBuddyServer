@@ -31,19 +31,19 @@ const readAll = async (req, res) => {
 };
 
 const deleteOne = async (req, res) => {
-  const { id } = req.params;
-  if (_.isNil(id)) {
+  const { groupId } = req.params;
+  if (_.isNil(groupId)) {
     console.log('필요한 값이 없습니다.');
     return res.status(400).send(util.fail(400, resMes.NULL_VALUE));
   }
   try {
-    const isGroup = await groupService.readOne(id);
+    const isGroup = await groupService.readOne(groupId);
     if (_.isNil(isGroup)) {
-      console.log(`${id} 번째 그룹은 없는 그룹 입니다.`);
+      console.log(`${groupId} 번째 그룹은 없는 그룹 입니다.`);
       return res.status(400).send(util.fail(400, resMes.NOT_EXITS_GROUP));
     }
 
-    const group = await groupService.delete(id);
+    const group = await groupService.delete(groupId);
     return res.status(200).send(util.success(200, resMes.DELETE_GROUP, group));
   } catch (err) {
     console.log(`그룹 삭제 에러. ${err}`);
@@ -52,19 +52,19 @@ const deleteOne = async (req, res) => {
 };
 
 const readOne = async (req, res) => {
-  const { id } = req.params;
-  if (_.isNil(id)) {
+  const { groupId } = req.params;
+  if (_.isNil(groupId)) {
     console.log('필요한 값이 없습니다.');
     return res.status(400).send(util.fail(400, resMes.NULL_VALUE));
   }
   try {
-    const isGroup = await groupService.readOne(id);
+    const isGroup = await groupService.readOne(groupId);
     if (_.isNil(isGroup)) {
-      console.log(`${id} 번째 그룹은 없는 그룹 입니다.`);
+      console.log(`${groupId} 번째 그룹은 없는 그룹 입니다.`);
       return res.status(400).send(util.fail(400, resMes.NOT_EXITS_GROUP));
     }
 
-    const group = await groupService.readOne(id);
+    const group = await groupService.readOne(groupId);
     return res.status(200).send(util.success(200, resMes.READ_ONE_GROUP, group));
   } catch (err) {
     console.log(`그룹 조회 에러. ${err}`);
