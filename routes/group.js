@@ -4,6 +4,7 @@ const groupController = require('../controllers/groupController');
 
 const router = express.Router();
 
+router.get('/all', groupController.allUserByGroup);
 router.post('/', groupController.create);
 router.get('/:groupId', groupController.readOne);
 router.get('/', groupController.readAll);

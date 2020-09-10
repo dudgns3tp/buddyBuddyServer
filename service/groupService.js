@@ -1,6 +1,8 @@
 /* eslint-disable no-undef */
 const _ = require('lodash');
-const { User, Group, GroupUserRelation } = require('../models');
+const {
+  User, Group, GroupUserRelation,
+} = require('../models');
 
 module.exports.create = async ({ groupLocation, groupName, etc }) => {
   const etcData = _.isNil(etc) ? '' : etc;
@@ -48,7 +50,6 @@ module.exports.readOne = async (groupId) => {
     const groupUser = await GroupUserRelation.findAll({
       include: [{
         model: User,
-        as: 'User',
       }],
       where: {
         groupId,
@@ -85,6 +86,24 @@ module.exports.isGroupMember = async (userId) => {
       where: {
         userId,
       },
+    });
+    return group;
+  } catch (err) {
+    throw err;
+  }
+};
+
+module.exports.allMemberByGroup = async () => {
+  try {
+    const group = await Group.findAll({
+      attributes: [
+        'groupId',
+        'groupName',
+      ],
+      include: [{
+        model: User,
+        through: { attributes: ['isLeader'] },
+      }],
     });
     return group;
   } catch (err) {

@@ -101,10 +101,21 @@ const joinGroup = async (req, res) => {
   }
 };
 
+const allUserByGroup = async (req, res) => {
+  try {
+    const allMembers = await groupService.allMemberByGroup();
+    return res.status(200).send(util.success(200, resMes.READ_ALL_GROUP, allMembers));
+  } catch (err) {
+    console.log(`그룹 불러오기 에러. ${err}`);
+    return res.status(500).send(util.fail(500, resMes.INTERNAL_SERVER_ERROR));
+  }
+};
+
 module.exports = {
   create,
   readAll,
   deleteOne,
   readOne,
   joinGroup,
+  allUserByGroup,
 };
