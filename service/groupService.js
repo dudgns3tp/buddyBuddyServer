@@ -1,5 +1,8 @@
+/* eslint-disable no-undef */
 const _ = require('lodash');
-const { Group, GroupUserRelation } = require('../models');
+const {
+  User, Group, GroupUserRelation,
+} = require('../models');
 
 module.exports.create = async ({ groupLocation, groupName, etc }) => {
   const etcData = _.isNil(etc) ? '' : etc;
@@ -9,7 +12,6 @@ module.exports.create = async ({ groupLocation, groupName, etc }) => {
       groupName,
       etc: etcData,
     });
-    console.log(group);
     return group;
   } catch (err) {
     throw err;
@@ -19,17 +21,17 @@ module.exports.create = async ({ groupLocation, groupName, etc }) => {
 module.exports.readAll = async () => {
   try {
     const group = await Group.findAll();
-    return { group };
+    return group;
   } catch (err) {
     throw err;
   }
 };
 
-module.exports.delete = async (id) => {
+module.exports.delete = async (groupId) => {
   try {
     const group = await Group.destroy({
       where: {
-        id,
+        groupId,
       },
     });
     return group;
@@ -38,14 +40,27 @@ module.exports.delete = async (id) => {
   }
 };
 
-module.exports.readOne = async (id) => {
+module.exports.readOne = async (groupId) => {
   try {
     const group = await Group.findOne({
       where: {
-        id,
+        groupId,
       },
     });
-    return group;
+    const groupUser = await GroupUserRelation.findAll({
+      include: [{
+        model: User,
+      }],
+      where: {
+        groupId,
+      },
+      attributes: ['groupUserId', 'isLeader'],
+    });
+
+    return {
+      group,
+      users: groupUser,
+    };
   } catch (err) {
     throw err;
   }
@@ -71,6 +86,24 @@ module.exports.isGroupMember = async (userId) => {
       where: {
         userId,
       },
+    });
+    return group;
+  } catch (err) {
+    throw err;
+  }
+};
+
+module.exports.allMemberByGroup = async () => {
+  try {
+    const group = await Group.findAll({
+      attributes: [
+        'groupId',
+        'groupName',
+      ],
+      include: [{
+        model: User,
+        through: { attributes: ['isLeader'] },
+      }],
     });
     return group;
   } catch (err) {

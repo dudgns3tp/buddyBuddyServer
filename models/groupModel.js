@@ -1,4 +1,9 @@
 module.exports = (sequelize, DataType) => sequelize.define('Group', {
+  groupId: {
+    type: DataType.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
+  },
   groupLocation: {
     type: DataType.STRING(45),
     allowNull: false,

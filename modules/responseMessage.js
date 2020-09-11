@@ -10,6 +10,11 @@ module.exports = {
   NOT_EXITS_GROUP: '없는 그룹 입니다.',
   SUCCESS_JOIN_GROUP: '그룹 가입 완료.',
   ALREADY_HAS_MEMBER: '이미 가입한 멤버',
+
+  // 회원
+  READ_ALL_USER: '모든 회원 조회 완료',
+  GET_ALL_USER_CONT: '회원 수 조회',
+
   // 서버에러
   INTERNAL_SERVER_ERROR: '서버 내부 에러',
 };

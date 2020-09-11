@@ -26,5 +26,11 @@ db.Group.belongsToMany(db.User, {
   foreignKey: 'groupId',
   otherKey: 'userId',
 });
+db.GroupUserRelation.belongsTo(db.User, {
+  foreignKey: 'userId',
+});
+db.GroupUserRelation.belongsTo(db.Group, {
+  foreignKey: 'groupId',
+});
 
 module.exports = db;
